@@ -8,6 +8,7 @@ import pandas as pd
 # URL = "https://api.github.com/repos/nvbn/thefuck/contributors"
 URL = "https://api.github.com/users/KrzysztofO19926"
 
+# jakis komentarz
 
 def fetch_data(url):
     with urllib.request.urlopen(url) as response:
