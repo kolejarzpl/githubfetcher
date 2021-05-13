@@ -1,23 +1,15 @@
+
 import os
 import urllib.request
 import json
 import csv
-import sys
-import pandas as pd
 
-# URL = "https://api.github.com/repos/nvbn/thefuck/contributors"
-URL = "https://api.github.com/users/KrzysztofO19926"
-
-
- #nie dupa
-
+URL = "https://api.github.com/repos/nvbn/thefuck/contributors"
 
 def fetch_data(url):
     with urllib.request.urlopen(url) as response:
         resp = json.loads(response.read().decode())
-        print(resp)
         return resp
-
 
 def save_data(resp):
     #
@@ -28,22 +20,8 @@ def save_data(resp):
     filepath = os.path.join(dirname, nameOfJsonFile)
     file = open(filepath, 'w+')
     file.write(str(resp))
-
-    # print(resp['login'])
-
-    # x = json.dumps(resp)
-
-    for key, value in resp.items():
-        print(key, value)
-
-    csv_columns = ['No', 'Name', 'Country']
-    dict_data = [
-        {'No': 1, 'Name': 'Alex', 'Country': 'India'},
-        {'No': 2, 'Name': 'Ben', 'Country': 'USA'},
-        {'No': 3, 'Name': 'Shri Ram', 'Country': 'India'},
-        {'No': 4, 'Name': 'Smith', 'Country': 'USA'},
-        {'No': 5, 'Name': 'Yuva Raj', 'Country': 'India'},
-    ]
+    csv_columns = ['login', 'id', 'node_id', 'avatar_url', 'gravatar_id', 'url', 'html_url', 'followers_url', 'following_url', 'gists_url', 'starred_url', 'organizations_url', 'subscriptions_url', 'repos_url', 'events_url', 'received_events_url', 'type', 'site_admin', 'contributions']
+    dict_data = resp
     csv_file = "Names.csv"
     try:
         with open(csv_file, 'w') as csvfile:
@@ -54,7 +32,7 @@ def save_data(resp):
     except IOError:
         print("I/O error")
 
-
 if __name__ == '__main__':
     resp = fetch_data(URL)
     save_data(resp)
+
