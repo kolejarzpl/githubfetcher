@@ -1,15 +1,15 @@
+import csv
+import json
 import os
 import urllib.request
-import json
-import csv
 
-import repository.contributorRepository
-from service import contributorService
 from repository import contributorRepository
-
-import sqlite3
+from service import contributorService
+from repository import userRepository
+from service import userService
 
 URL = "https://api.github.com/repos/nvbn/thefuck/contributors"
+login = 0
 
 
 def fetch_data(url):
@@ -41,6 +41,18 @@ def save_data(resp):
     except IOError:
         print("I/O error")
 
+def addUser(user_url):
+    login = input("Podaj login użytkownika:")
+    print("podany login:", login)
+    user_URL = "https://api.github.com/users/"+login
+
+    return user_URL
+
+def fetch_user_data(user_url):
+    with urllib.request.urlopen(user_url) as user_response:
+        user_response = json.loads(user_response.read().decode())
+        return user_response
+
 
 if __name__ == '__main__':
     resp = fetch_data(URL)
@@ -49,6 +61,17 @@ if __name__ == '__main__':
     contributorService.add_contributors(resp)
 
     print(contributorService.get_all_contributors())
-    print(contributorService.get_contributor_by_name("kimtree"))
+    # print(contributorService.get_contributor_by_name("kimtree"))
 
     contributorRepository.drop_table("contributors")
+
+    user_URL = addUser(login)
+    print(user_URL)
+    user_resp = fetch_user_data(user_URL)
+    print(user_resp)
+
+    userService.add_users(user_resp)
+    print(userService.get_all_users())
+    userRepository.drop_table("users")
+
+
