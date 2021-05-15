@@ -7,6 +7,8 @@ import repository.contributorRepository
 from service import contributorService
 from repository import contributorRepository
 
+import sqlite3
+
 URL = "https://api.github.com/repos/nvbn/thefuck/contributors"
 
 
@@ -41,7 +43,12 @@ def save_data(resp):
 
 
 if __name__ == '__main__':
-    # resp = fetch_data(URL)
+    resp = fetch_data(URL)
     # save_data(resp)
+
+    contributorService.add_contributors(resp)
+
     print(contributorService.get_all_contributors())
-    repository.contributorRepository.drop_table()
+    print(contributorService.get_contributor_by_name("kimtree"))
+
+    contributorRepository.drop_table("contributors")

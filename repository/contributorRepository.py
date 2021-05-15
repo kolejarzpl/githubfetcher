@@ -11,9 +11,9 @@ def initiate_db():
     conn = sqlite3.connect('database/gitfetcherdb.db')
 
     db = conn.cursor()
-
+    db.execute('DROP TABLE IF EXISTS contributors')
     db.execute("""
-    CREATE TABLE contributors ( 
+    CREATE TABLE IF NOT EXISTS contributors ( 
                 login text,
                 id integer,
                 node_id text,
@@ -35,9 +35,6 @@ def initiate_db():
                 contributions integer)
                      """)
     print(f"Table contributors created")
-    # todo temporary to delete
-    db.execute(
-        """INSERT INTO contributors VALUES ('Pawel', 123, '', '','','','','','','','','','','','','','','','')""")
 
     conn.commit()
     conn.close()
@@ -45,21 +42,80 @@ def initiate_db():
 
 def get_all_contributors():
     conn = sqlite3.connect('database/gitfetcherdb.db')
-
     db = conn.cursor()
     db.execute("""SELECT * FROM contributors""")
     return db.fetchall()
-    conn.commit()
-    conn.close()
-    print(f"Contributors fetched")
 
 
-# todo temporary to delete?
-def drop_table():
+def get_contributor_by_name(name):
+    conn = sqlite3.connect('database/gitfetcherdb.db')
+
+    sql = """SELECT * FROM contributors WHERE login = ?"""
+
+    db = conn.cursor()
+    db.execute(sql, (name,))
+    return db.fetchall()
+
+
+def drop_table(table_name):
     conn = sqlite3.connect('database/gitfetcherdb.db')
 
     db = conn.cursor()
-    db.execute("""DROP TABLE contributors""")
+    sql = "DROP TABLE " + table_name
+    db.execute(sql)
     conn.commit()
     conn.close()
-    print(f"Table contributors dropped")
+    print(f"Table " + table_name + " dropped")
+
+
+def save_contributors(resp):
+    conn = sqlite3.connect('database/gitfetcherdb.db')
+
+    initiate_db()
+    sql = """ INSERT INTO contributors(
+                login,
+                id,
+                node_id,
+                avatar_url,
+                gravatar_id,
+                url,
+                html_url,
+                followers_url,
+                following_url,
+                gists_url,
+                starred_url,
+                subscriptions_url,
+                organizations_url,
+                received_events_url,
+                repos_url,
+                events_url,
+                type,
+                site_admin,
+                contributions) VALUES (
+                :login,
+                :id,
+                :node_id,
+                :avatar_url,
+                :gravatar_id,
+                :url,
+                :html_url,
+                :followers_url,
+                :following_url,
+                :gists_url,
+                :starred_url,
+                :subscriptions_url,
+                :organizations_url,
+                :received_events_url,
+                :repos_url,
+                :events_url,
+                :type,
+                :site_admin,
+                :contributions)
+                     """
+
+    for contributor in resp:
+        db = conn.cursor()
+        db.execute(sql, contributor)
+        conn.commit()
+
+    conn.close()
