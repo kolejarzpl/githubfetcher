@@ -1,0 +1,6 @@
+- url z ktorego czytamy dane
+- zapisywanie ich do csv (dump data, saver)
+- odczytywanie z csv (czy czytamy dane nowe z linku czy bierzemy je z csv - future feat)
+- odczytanie danych z csv, wybranie loginu uzytkownika i odczytanie jego danych na githubie
+- polaczenie z baza danych (postgres)
+
