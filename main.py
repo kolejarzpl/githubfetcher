@@ -2,7 +2,10 @@ import os
 import urllib.request
 import json
 import csv
+
+import repository.contributorRepository
 from service import contributorService
+from repository import contributorRepository
 
 URL = "https://api.github.com/repos/nvbn/thefuck/contributors"
 
@@ -40,5 +43,5 @@ def save_data(resp):
 if __name__ == '__main__':
     # resp = fetch_data(URL)
     # save_data(resp)
-
     print(contributorService.get_all_contributors())
+    repository.contributorRepository.drop_table()

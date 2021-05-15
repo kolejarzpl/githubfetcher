@@ -12,7 +12,8 @@ def initiate_db():
 
     db = conn.cursor()
 
-    db.execute("""CREATE TABLE contributors ( 
+    db.execute("""
+    CREATE TABLE contributors ( 
                 login text,
                 id integer,
                 node_id text,
@@ -31,8 +32,9 @@ def initiate_db():
                 events_url text,
                 type text,
                 site_admin text,
-                contributions integer)""")
-
+                contributions integer)
+                     """)
+    print(f"Table contributors created")
     # todo temporary to delete
     db.execute(
         """INSERT INTO contributors VALUES ('Pawel', 123, '', '','','','','','','','','','','','','','','','')""")
@@ -49,6 +51,7 @@ def get_all_contributors():
     return db.fetchall()
     conn.commit()
     conn.close()
+    print(f"Contributors fetched")
 
 
 # todo temporary to delete?
@@ -59,3 +62,4 @@ def drop_table():
     db.execute("""DROP TABLE contributors""")
     conn.commit()
     conn.close()
+    print(f"Table contributors dropped")
