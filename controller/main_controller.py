@@ -1,0 +1,1 @@
+# w plikach typu controller wystawia sie koncowki na ktore robi sie odpytania odpowiednie a controller laczy sie z repo, nie wiem czy w ogole bedziemy tutaj tego uzywac
