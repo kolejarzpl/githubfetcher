@@ -1,14 +1,12 @@
-# w plikach typu repository, przechowuje sie metody i zapytania czysto odpowiedzialne za CRUD zapytan bazodanowych
-
 import sqlite3
-
+from githubfetcher.utils.constans import database
 
 # todo we will be working on database during all operations, there
 # should be open connection in main class and somehow repos and everything should operate on this to
 # avoid opening and closing this everytime
 
 def initiate_db():
-    conn = sqlite3.connect('database/gitfetcherdb.db')
+    conn = sqlite3.connect(database)
 
     db = conn.cursor()
     db.execute('DROP TABLE IF EXISTS users')
@@ -54,14 +52,14 @@ def initiate_db():
 
 
 def get_all_users():
-    conn = sqlite3.connect('database/gitfetcherdb.db')
+    conn = sqlite3.connect(database)
     db = conn.cursor()
     db.execute("""SELECT * FROM users""")
     return db.fetchall()
 
 
 def get_user_by_name(name):
-    conn = sqlite3.connect('database/gitfetcherdb.db')
+    conn = sqlite3.connect(database)
 
     sql = """SELECT * FROM users WHERE login = ?"""
 
@@ -70,19 +68,19 @@ def get_user_by_name(name):
     return db.fetchall()
 
 
-def drop_table(table_name):
-    conn = sqlite3.connect('database/gitfetcherdb.db')
-
-    db = conn.cursor()
-    sql = "DROP TABLE " + table_name
-    db.execute(sql)
-    conn.commit()
-    conn.close()
-    print(f"Table " + table_name + " dropped")
+# def drop_table(table_name):
+#     conn = sqlite3.connect(database)
+#
+#     db = conn.cursor()
+#     sql = "DROP TABLE " + table_name
+#     db.execute(sql)
+#     conn.commit()
+#     conn.close()
+#     print(f"Table " + table_name + " dropped")
 
 
 def save_users(user_resp):
-    conn = sqlite3.connect('database/gitfetcherdb.db')
+    conn = sqlite3.connect(database)
 
     initiate_db()
     sql = """ INSERT INTO users(

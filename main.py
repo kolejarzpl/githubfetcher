@@ -3,13 +3,14 @@ import json
 import os
 import urllib.request
 
-from repository import contributorRepository
+
+import sqlite3
 from service import contributorService
-from repository import userRepository
 from service import userService
+from utils import utils
 
 URL = "https://api.github.com/repos/nvbn/thefuck/contributors"
-login = 0
+user_URL = "https://api.github.com/users/pszalawinski"
 
 
 def fetch_data(url):
@@ -63,9 +64,9 @@ if __name__ == '__main__':
     print(contributorService.get_all_contributors())
     # print(contributorService.get_contributor_by_name("kimtree"))
 
-    contributorRepository.drop_table("contributors")
+    utils.drop_table("contributors")
 
-    user_URL = addUser(login)
+    # user_URL = addUser(login)
     print(user_URL)
     user_resp = fetch_user_data(user_URL)
     print(type(user_resp))
@@ -74,6 +75,6 @@ if __name__ == '__main__':
     userService.add_users(user_resp)
     print(user_resp)
     print(userService.get_all_users())
-    userRepository.drop_table("users")
+    utils.drop_table("users")
 
 
