@@ -68,9 +68,11 @@ if __name__ == '__main__':
     user_URL = addUser(login)
     print(user_URL)
     user_resp = fetch_user_data(user_URL)
-    print(user_resp)
+    print(type(user_resp))
+    print(resp)
 
     userService.add_users(user_resp)
+    print(user_resp)
     print(userService.get_all_users())
     userRepository.drop_table("users")
 

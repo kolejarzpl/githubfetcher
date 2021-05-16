@@ -63,7 +63,7 @@ def get_all_users():
 def get_user_by_name(name):
     conn = sqlite3.connect('database/gitfetcherdb.db')
 
-    sql2 = """SELECT * FROM users WHERE login = ?"""
+    sql = """SELECT * FROM users WHERE login = ?"""
 
     db = conn.cursor()
     db.execute(sql, (name,))
@@ -74,7 +74,7 @@ def drop_table(table_name):
     conn = sqlite3.connect('database/gitfetcherdb.db')
 
     db = conn.cursor()
-    sql2 = "DROP TABLE " + table_name
+    sql = "DROP TABLE " + table_name
     db.execute(sql)
     conn.commit()
     conn.close()
@@ -85,7 +85,7 @@ def save_users(user_resp):
     conn = sqlite3.connect('database/gitfetcherdb.db')
 
     initiate_db()
-    sql2 = """ INSERT INTO users(
+    sql = """ INSERT INTO users(
                 login,
                 id,
                 node_id,
@@ -140,7 +140,7 @@ def save_users(user_resp):
                 :company,
                 :blog,
                 :location,
-                :email ,
+                :email,
                 :hireable,
                 :bio,
                 :twitter_username,
@@ -152,9 +152,8 @@ def save_users(user_resp):
                 :updated_at)
                      """
 
-    for user in user_resp:
-        db = conn.cursor()
-        db.execute(sql2, user)
-        conn.commit()
 
+    db = conn.cursor()
+    db.execute(sql, user_resp)
+    conn.commit()
     conn.close()
