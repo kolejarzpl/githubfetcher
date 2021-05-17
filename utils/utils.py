@@ -1,3 +1,6 @@
+import sqlite3
+from utils.constans import database
+
 def drop_table(table_name):
     conn = sqlite3.connect(database)
 

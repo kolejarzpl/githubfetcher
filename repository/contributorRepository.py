@@ -1,6 +1,5 @@
 import sqlite3
-from githubfetcher.utils.constans import database
-
+from utils.constans import database
 
 # todo we will be working on database during all operations, there
 # should be open connection in main class and somehow repos and everything should operate on this to
@@ -54,18 +53,6 @@ def get_contributor_by_name(name):
     db = conn.cursor()
     db.execute(sql, (name,))
     return db.fetchall()
-
-
-# def drop_table(table_name):
-#     conn = sqlite3.connect(database)
-#
-#     db = conn.cursor()
-#     sql = "DROP TABLE " + table_name
-#     db.execute(sql)
-#     conn.commit()
-#     conn.close()
-#     print(f"Table " + table_name + " dropped")
-
 
 def save_contributors(resp):
     conn = sqlite3.connect(database)

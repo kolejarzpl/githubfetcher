@@ -3,8 +3,6 @@ import json
 import os
 import urllib.request
 
-
-import sqlite3
 from service import contributorService
 from service import userService
 from utils import utils
@@ -69,12 +67,8 @@ if __name__ == '__main__':
     # user_URL = addUser(login)
     print(user_URL)
     user_resp = fetch_user_data(user_URL)
-    print(type(user_resp))
-    print(resp)
-
     userService.add_users(user_resp)
     print(user_resp)
-    print(userService.get_all_users())
     utils.drop_table("users")
 
 
