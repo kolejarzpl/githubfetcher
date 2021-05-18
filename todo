@@ -1,5 +1,6 @@
 1. graficzne okienko i przyciski "zamknij" "zglos problem" "zglos wlasna wiadomosc i okienko"
 2. przy wyslaniu wiadomosci zapis do bazy danych z numerkiem stanowiska i wiadomoscia
+  2b. oraz wysłanie powiadomienia na maila z numerkiem stanowiska i wiadomością
 3. przy receivie jak wiadomosc odczytana to markowanie wiadomosci w bazie danych, a jezeli np receiver jest offline (komp wylaczony) to po wlaczeniu
 sprawdza baze danych i wyrzuca wszystkie komunikaty plus informacja czy ma je zamarkowac jako odczytane
 4. receiver ma okienko w ktorym pojawia sie wiadomosc i stanowisko + sygnal dzwiekowy
