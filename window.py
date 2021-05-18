@@ -6,11 +6,12 @@ import time
 
 frame = tk.Tk()
 frame.title("Worker messenger")
-frame.geometry('400x200')
+frame.geometry('750x350')
+frame.config(background="violet")
 
 
 def sendMessage(data):
-    host = "192.168.1.162"  # set to IP address of target computer
+    host = "192.168.8.114"  # będą docelowo def SendMessageDUR i defSendMessageMES z dwoma różnymi IP, ale baza danych wspólna
     port = 13005
     addr = (host, port)
     UDPSock = socket(AF_INET, SOCK_DGRAM)
@@ -28,6 +29,17 @@ def printInput():
         lbl.config(text="Awaria zgłoszona")
         sendMessage("alarm")
 
+
+def printInputMes():
+    inpmes = inputtxt.get(1.0, "end-1c")
+    if inpmes != "":
+        lbl.config(text="Problem zgłoszony z wiadomością:\n" + inpmes)
+        sendMessage(inpmes)
+    else:
+        lbl.config(text="Problem zgłoszony")
+        sendMessage("alarm")
+
+
 def alarm():
     lbl.config(text="Alarm zgłoszony")
     return
@@ -40,24 +52,54 @@ def cleaner():
 
 # TextBox Creation
 inputtxt = tk.Text(frame,
-                   height=5,
-                   width=20)
+                   height=12,
+                   width=40,
+                   font="20")
 
-inputtxt.pack()
+inputtxt.pack(side = "left")
 
 # Button Creation
 
 alarmButton = tk.Button(frame,
-                        text="Zgłoś awarię",
+                        text="Wezwij DUR",
+                        font="20",
+                        bg="red",
+                        cursor="spider",
+                        height=3,
+                        width=20,
                         command=printInput)
-alarmButton.pack()
+alarmButton.pack(side="top")
 
-okButton = tk.Button(frame,
+mesButton = tk.Button(frame,
+                      text="Zgłoś problem z MES",
+                      font="20",
+                      bg="yellow",
+                      cursor="spider",
+                      height=3,
+                      width=20,
+                      command=printInputMes)
+mesButton.pack(side="top")
+
+clearButton = tk.Button(frame,
                         text="Wyczyść komunikat",
+                        font="20",
+                        bg="green",
+                        cursor="spider",
+                        height=3,
+                        width=20,
                         command=cleaner)
-okButton.pack()
+clearButton.pack(side="top")
 
-
+closeButton = tk.Button(frame,
+                        text="Zamknij",
+                        font="20",
+                        fg="white",
+                        bg="black",
+                        cursor="spider",
+                        height=3,
+                        width=20,
+                        command=frame.destroy)
+closeButton.pack(side="top")
 
 if __name__ == "__main__":
     label = tk.Label(frame, text="siemka")
