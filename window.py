@@ -3,14 +3,16 @@ from tkinter import END
 import os
 from socket import socket, AF_INET, SOCK_DGRAM
 import time
+import tkinter.messagebox
 
 frame = tk.Tk()
 frame.title("Worker messenger")
-frame.geometry('400x200')
+frame.geometry('300x280')
+frame.config(background="violet")
 
 
 def sendMessage(data):
-    host = "192.168.1.162"  # set to IP address of target computer
+    host = "192.168.0.85"  # będą docelowo def SendMessageDUR i defSendMessageMES z dwoma różnymi IP, ale baza danych wspólna
     port = 13005
     addr = (host, port)
     UDPSock = socket(AF_INET, SOCK_DGRAM)
@@ -22,15 +24,30 @@ def sendMessage(data):
 def printInput():
     inp = inputtxt.get(1.0, "end-1c")
     if inp != "":
-        lbl.config(text="Awaria zgłoszona z wiadomością:\n" + inp)
+        tk.messagebox.showinfo(title="Sukces", message="Awaria zgłoszona z wiadomością:\n" + inp)
         sendMessage(inp)
+        inputtxt.delete(1.0, END)
     else:
-        lbl.config(text="Awaria zgłoszona")
+        tk.messagebox.showinfo(title="Sukces", message="Awaria zgłoszona")
         sendMessage("alarm")
+        inputtxt.delete(1.0, END)
 
-def alarm():
-    lbl.config(text="Alarm zgłoszony")
-    return
+
+def printInputMes():
+    inpmes = inputtxt.get(1.0, "end-1c")
+    if inpmes != "":
+        tk.messagebox.showinfo(title="Sukces", message="Problem zgłoszony z wiadomością:\n" + inpmes)
+        sendMessage(inpmes)
+        inputtxt.delete(1.0, END)
+    else:
+        tk.messagebox.showinfo(title="Sukces", message="Problem zgłoszony")
+        sendMessage("MES nie działa")
+        inputtxt.delete(1.0, END)
+
+
+# def alarm():
+#     lbl.config(text="Alarm zgłoszony")
+#     return
 
 
 def cleaner():
@@ -40,27 +57,56 @@ def cleaner():
 
 # TextBox Creation
 inputtxt = tk.Text(frame,
-                   height=5,
-                   width=20)
+                   height=4,
+                   width=30,
+                   font="20")
 
-inputtxt.pack()
+inputtxt.pack(side = "top")
 
 # Button Creation
 
 alarmButton = tk.Button(frame,
-                        text="Zgłoś awarię",
+                        text="Wezwij DUR",
+                        font="20",
+                        bg="red",
+                        cursor="spider",
+                        height=3,
+                        width=30,
                         command=printInput)
-alarmButton.pack()
+alarmButton.pack(side = "top")
 
-okButton = tk.Button(frame,
+mesButton = tk.Button(frame,
+                      text="Zgłoś problem z MES",
+                      font="20",
+                      bg="yellow",
+                      cursor="spider",
+                      height=3,
+                      width=30,
+                      command=printInputMes)
+mesButton.pack(side = "top")
+
+clearButton = tk.Button(frame,
                         text="Wyczyść komunikat",
+                        font="20",
+                        bg="green",
+                        cursor="spider",
+                        height=1,
+                        width=30,
                         command=cleaner)
-okButton.pack()
+clearButton.pack(side = "top")
 
-
+closeButton = tk.Button(frame,
+                        text="Zamknij",
+                        font="20",
+                        fg="white",
+                        bg="black",
+                        cursor="spider",
+                        height=1,
+                        width=30,
+                        command=frame.destroy)
+closeButton.pack(side = "top")
 
 if __name__ == "__main__":
-    label = tk.Label(frame, text="siemka")
     lbl = tk.Label(frame, text="")
     lbl.pack()
     frame.mainloop()
