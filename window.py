@@ -5,7 +5,6 @@ from socket import socket, AF_INET, SOCK_DGRAM
 import time
 import tkinter.messagebox
 
-
 frame = tk.Tk()
 frame.title("Worker messenger")
 frame.geometry('300x280')
