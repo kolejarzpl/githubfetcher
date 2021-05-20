@@ -1,8 +1,8 @@
 import sqlite3
-from utils.constans import database
+from utils.constans import DATABASE
 
 def drop_table(table_name):
-    conn = sqlite3.connect(database)
+    conn = sqlite3.connect(DATABASE)
 
     db = conn.cursor()
     sql = "DROP TABLE " + table_name

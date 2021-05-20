@@ -1,12 +1,12 @@
 import sqlite3
-from utils.constans import database
+from utils.constans import DATABASE
 
 # todo we will be working on database during all operations, there
 # should be open connection in main class and somehow repos and everything should operate on this to
 # avoid opening and closing this everytime
 
 def initiate_db():
-    conn = sqlite3.connect(database)
+    conn = sqlite3.connect(DATABASE)
 
     db = conn.cursor()
     db.execute('DROP TABLE IF EXISTS contributors')
@@ -39,14 +39,14 @@ def initiate_db():
 
 
 def get_all_contributors():
-    conn = sqlite3.connect(database)
+    conn = sqlite3.connect(DATABASE)
     db = conn.cursor()
     db.execute("""SELECT * FROM contributors""")
     return db.fetchall()
 
 
 def get_contributor_by_name(name):
-    conn = sqlite3.connect(database)
+    conn = sqlite3.connect(DATABASE)
 
     sql = """SELECT * FROM contributors WHERE login = ?"""
 
@@ -55,7 +55,7 @@ def get_contributor_by_name(name):
     return db.fetchall()
 
 def save_contributors(resp):
-    conn = sqlite3.connect(database)
+    conn = sqlite3.connect(DATABASE)
 
     initiate_db()
     sql = """ INSERT INTO contributors(

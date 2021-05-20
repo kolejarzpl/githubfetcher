@@ -8,7 +8,7 @@ from service import userService
 from utils import utils
 
 URL = "https://api.github.com/repos/nvbn/thefuck/contributors"
-user_URL = "https://api.github.com/users/pszalawinski"
+user_URL = "https://api.github.com/users/" #fill URL with username
 
 
 def fetch_data(url):

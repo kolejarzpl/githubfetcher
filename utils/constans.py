@@ -1,1 +1,1 @@
-database = 'database/gitfetcherdb.db'
+DATABASE = 'database/gitfetcherdb.db'
