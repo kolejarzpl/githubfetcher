@@ -9,9 +9,9 @@ def initiate_db():
     conn = sqlite3.connect(database)
 
     db = conn.cursor()
-    db.execute('DROP TABLE IF EXISTS contributors')
+    db.execute('DROP TABLE IF EXISTS users')
     db.execute("""
-    CREATE TABLE IF NOT EXISTS contributors ( 
+    CREATE TABLE IF NOT EXISTS users ( 
                 login text,
                 id integer,
                 node_id text,
@@ -25,40 +25,53 @@ def initiate_db():
                 starred_url text,
                 subscriptions_url text,
                 organizations_url text,
-                received_events_url text,
                 repos_url text,
                 events_url text,
+                received_events_url text,
                 type text,
                 site_admin text,
-                contributions integer)
+                name text,
+                company text,
+                blog text,
+                location text,
+                email text ,
+                hireable text,
+                bio text,
+                twitter_username text,
+                public_repos integer,
+                public_gists integer,
+                followers integer,
+                following integer,
+                created_at text,
+                updated_at text)
                      """)
-    print(f"Table contributors created")
+    print(f"Table users is created")
 
     conn.commit()
     conn.close()
 
 
-def get_all_contributors():
+def get_all_users():
     conn = sqlite3.connect(database)
     db = conn.cursor()
-    db.execute("""SELECT * FROM contributors""")
+    db.execute("""SELECT * FROM users""")
     return db.fetchall()
 
 
-def get_contributor_by_name(name):
+def get_user_by_name(name):
     conn = sqlite3.connect(database)
 
-    sql = """SELECT * FROM contributors WHERE login = ?"""
+    sql = """SELECT * FROM users WHERE login = ?"""
 
     db = conn.cursor()
     db.execute(sql, (name,))
     return db.fetchall()
 
-def save_contributors(resp):
+def save_users(user_resp):
     conn = sqlite3.connect(database)
 
     initiate_db()
-    sql = """ INSERT INTO contributors(
+    sql = """ INSERT INTO users(
                 login,
                 id,
                 node_id,
@@ -72,12 +85,25 @@ def save_contributors(resp):
                 starred_url,
                 subscriptions_url,
                 organizations_url,
-                received_events_url,
                 repos_url,
                 events_url,
+                received_events_url,
                 type,
                 site_admin,
-                contributions) VALUES (
+                name,
+                company,
+                blog,
+                location,
+                email ,
+                hireable,
+                bio,
+                twitter_username,
+                public_repos,
+                public_gists,
+                followers,
+                following,
+                created_at,
+                updated_at) VALUES (
                 :login,
                 :id,
                 :node_id,
@@ -91,17 +117,29 @@ def save_contributors(resp):
                 :starred_url,
                 :subscriptions_url,
                 :organizations_url,
-                :received_events_url,
                 :repos_url,
                 :events_url,
+                :received_events_url,
                 :type,
                 :site_admin,
-                :contributions)
+                :name,
+                :company,
+                :blog,
+                :location,
+                :email,
+                :hireable,
+                :bio,
+                :twitter_username,
+                :public_repos,
+                :public_gists,
+                :followers,
+                :following,
+                :created_at,
+                :updated_at)
                      """
 
-    for contributor in resp:
-        db = conn.cursor()
-        db.execute(sql, contributor)
-        conn.commit()
 
+    db = conn.cursor()
+    db.execute(sql, user_resp)
+    conn.commit()
     conn.close()
