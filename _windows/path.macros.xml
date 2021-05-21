@@ -1,5 +1,6 @@
 <application>
   <component name="PathMacrosImpl">
     <macro name="PATH" value="C:/Users/kolejarz/AppData/Roaming/Python/Python39/site-packages" />
+    <macro name="PATHb" value="C:/Program Files/Python39/Lib/site-packages" />
   </component>
 </application>
